@@ -4,12 +4,11 @@ const { PrismaClient } = require("@prisma/client");
 const userController = require("./controllers/userController");
 const prisma = new PrismaClient();
 const app = express();
-const PORT = 4000;
 
 // Routes
 app.use("/user", userController);
 
 // Listener
-app.listen(PORT, () => {
-  console.log("listening on port", PORT);
+app.listen(process.env.PORT || 4000, () => {
+  console.log("listening on port", 4000);
 });
