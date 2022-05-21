@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const app = express();
 
 // Routes
-app.use("/user", userController);
+app.use("/api/user", userController);
 
 // Listener
 app.listen(process.env.PORT || 4000, () => {

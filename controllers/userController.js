@@ -9,7 +9,7 @@ const userController = express.Router();
 
 // Generic Get Route
 user.get("/", async (req, res) => {
-  res.status(200).send({ msg: "Welcome to the user get route" });
+  res.send({ msg: "Welcome to the user get route" });
 });
 
 // Register new user
