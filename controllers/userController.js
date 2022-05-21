@@ -7,6 +7,11 @@ const prisma = new PrismaClient();
 const saltRounds = 10;
 const userController = express.Router();
 
+// Generic Get Route
+user.get("/", async (req, res) => {
+  res.status(200).send({ msg: "Welcome to the user get route" });
+});
+
 // Register new user
 user.post("/register", async (req, res) => {
   console.log(req.body);
