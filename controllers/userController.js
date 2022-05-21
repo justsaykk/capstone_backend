@@ -13,24 +13,28 @@ userController.get("/", (req, res) => {
 
 // Register new user
 userController.post("/register", async (req, res) => {
-  console.log(req.body);
   const { name, email, password } = req.body;
+  console.log("req.body is ", req.body);
+
   try {
-    // Finding if email is inside database
     const foundUser = await prisma.User.findUnique({
       where: {
         email: email,
       },
     });
-    // Create user
-    if (!foundUser) {
-      await prisma.User.create({
+    console.log("foundUser is ", foundUser); // Should be "NULL"
+    if (foundUser) {
+      return res.status(400).send({ msg: "user exists" });
+    } else {
+      const newUser = await prisma.User.create({
         data: {
           name: name,
           email: email,
           password: bcrypt.hashSync(password, saltRounds),
         },
       });
+      res.status(200).send({ msg: "Created new user" });
+      console.log("Created new user", newUser);
     }
   } catch (error) {
     res.status(404).send({ msg: error });
