@@ -1,6 +1,15 @@
+// Dependencies
 const express = require("express");
+const { PrismaClient } = require("@prisma/client");
+const userController = require("./controllers/userController");
+const prisma = new PrismaClient();
 const app = express();
+const PORT = 4000;
 
-app.get("/", (req, res) => {
-  res.send("Hello Backend world");
+// Routes
+app.use("/user", userController);
+
+// Listener
+app.listen(PORT, () => {
+  console.log("listening on port", PORT);
 });
