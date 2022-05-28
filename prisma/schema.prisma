@@ -12,8 +12,46 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  name     String?
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
   password String
+}
+
+model Products {
+  id          Int    @id @default(autoincrement())
+  pName       String
+  description String
+  price       Int
+}
+
+model Itinerary {
+  id        Int @id @default(autoincrement())
+  productId Int
+  duration  Int
+}
+
+model DayActivities {
+  id          Int     @id @default(autoincrement())
+  itineraryId Int
+  Day01       String?
+  Day02       String?
+  Day03       String?
+  Day04       String?
+  Day05       String?
+  Day06       String?
+  Day07       String?
+  Day08       String?
+  Day09       String?
+  Day10       String?
+  Day11       String?
+  Day12       String?
+  Day13       String?
+  Day14       String?
+  Day15       String?
+  Day16       String?
+  Day17       String?
+  Day18       String?
+  Day19       String?
+  Day20       String?
 }

@@ -1,13 +1,14 @@
 // Dependencies
 const express = require("express");
-const { PrismaClient } = require("@prisma/client");
 const cors = require("cors");
-const userController = require("./controllers/userController");
-const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
-// Routes
+// Controllers
+const userController = require("./controllers/userController");
+const productController = require("./controllers/productController");
+
+// CORS
 app.use(
   cors({
     credentials: true,
@@ -20,7 +21,10 @@ app.use(
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
+
+// Routes
 app.use("/api/user", userController);
+app.use("/api/product", productController);
 
 // Listener
 app.listen(process.env.PORT || 4000, () => {

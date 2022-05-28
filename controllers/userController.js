@@ -1,9 +1,9 @@
 // Dependencies
-const bcrypt = require("bcrypt");
 const express = require("express");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const saltRounds = 10;
 const userController = express.Router();
 
 // Seed Data
