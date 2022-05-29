@@ -5,27 +5,9 @@ const saltRounds = 10;
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const userController = express.Router();
+const userSeeds = require("./seed_data/user_seed");
 
-// Seed Data
-const userSeeds = [
-  {
-    name: "user01",
-    email: "user01@user.com",
-    password: bcrypt.hashSync("123456", saltRounds),
-  },
-  {
-    name: "user02",
-    email: "user02@user.com",
-    password: bcrypt.hashSync("123456", saltRounds),
-  },
-  {
-    name: "user03",
-    email: "user03@user.com",
-    password: bcrypt.hashSync("123456", saltRounds),
-  },
-];
-
-// Generic Get Route
+// Generic Get Route (/api/user)
 userController.get("/", (req, res) => {
   res.send({ msg: "Welcome to the user get route" });
 });

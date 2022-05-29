@@ -19,21 +19,25 @@ model User {
 }
 
 model Products {
-  id          Int    @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   pName       String
   description String
   price       Int
+  Itinerary   Itinerary[]
 }
 
 model Itinerary {
-  id        Int @id @default(autoincrement())
-  productId Int
-  duration  Int
+  id            Int             @id @default(autoincrement())
+  productId     Int
+  product       Products        @relation(fields: [productId], references: [id])
+  duration      Int
+  DayActivities DayActivities[]
 }
 
 model DayActivities {
-  id          Int     @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   itineraryId Int
+  itinerary   Itinerary @relation(fields: [itineraryId], references: [id])
   Day01       String?
   Day02       String?
   Day03       String?
