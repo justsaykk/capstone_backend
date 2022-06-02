@@ -11,7 +11,7 @@ const productController = express.Router();
 productController.get("/", async (req, res) => {
   try {
     const productList = await prisma.Products.findMany();
-    res.send(productList);
+    res.status(200).send(productList);
   } catch (error) {
     res.status(400).send({ msg: error });
   }
@@ -53,5 +53,23 @@ productController.get("/seed/dayactivities", async (req, res) => {
 });
 
 // Routes
+productController.get("/details", async (req, res) => {
+  try {
+    const query = parseInt(req.body.productID);
+    const link = await prisma.Itinerary.findFirst({
+      where: {
+        productId: query,
+      },
+    });
+    const details = await prisma.DayActivities.findFirst({
+      where: {
+        itineraryId: link.id,
+      },
+    });
+    res.status(200).send(details);
+  } catch (error) {
+    res.status(400).send({ msg: error });
+  }
+});
 
 module.exports = productController;
