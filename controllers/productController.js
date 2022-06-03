@@ -55,7 +55,7 @@ productController.get("/", async (req, res) => {
 // Routes
 productController.post("/details", async (req, res) => {
   try {
-    const query = parseInt(req.body.productID);
+    const query = parseInt(req.body.productId);
     const link = await prisma.Itinerary.findFirst({
       where: {
         productId: query,
@@ -67,6 +67,31 @@ productController.post("/details", async (req, res) => {
       },
     });
     res.status(200).send(details);
+  } catch (error) {
+    res.status(400).send({ msg: error });
+  }
+});
+
+productController.post("/addtocart", async (req, res) => {
+  try {
+    const query = parseInt(req.body.productId);
+    const queryResult = await prisma.Products.findOne({
+      where: {
+        Id: query,
+      },
+      select: {
+        pName: true,
+        price: true,
+      },
+    });
+  } catch (error) {
+    res.status(400).send({ msg: error });
+  }
+});
+
+productController.post("/purchase", async (req, res) => {
+  try {
+    // Code here
   } catch (error) {
     res.status(400).send({ msg: error });
   }
