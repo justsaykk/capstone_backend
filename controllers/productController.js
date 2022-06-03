@@ -75,15 +75,17 @@ productController.post("/details", async (req, res) => {
 productController.post("/addtocart", async (req, res) => {
   try {
     const query = parseInt(req.body.productId);
-    const queryResult = await prisma.Products.findMany({
+    console.log("query:", query);
+    const queryResult = await prisma.Products.findUnique({
       where: {
-        Id: query,
+        id: query,
       },
       select: {
         pName: true,
         price: true,
       },
     });
+    console.log(queryResult);
     res.status(200).send(queryResult);
   } catch (error) {
     res.status(400).send({ msg: error });
