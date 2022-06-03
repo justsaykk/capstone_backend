@@ -75,7 +75,7 @@ productController.post("/details", async (req, res) => {
 productController.post("/addtocart", async (req, res) => {
   try {
     const query = parseInt(req.body.productId);
-    const queryResult = await prisma.Products.findOne({
+    const queryResult = await prisma.Products.findMany({
       where: {
         Id: query,
       },
