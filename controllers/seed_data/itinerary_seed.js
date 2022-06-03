@@ -12,10 +12,6 @@ const itinerarySeed = [
     productId: 3,
     duration: 20,
   },
-  {
-    productId: 1,
-    duration: 20,
-  },
 ];
 
 module.exports = itinerarySeed;

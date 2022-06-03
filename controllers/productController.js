@@ -53,7 +53,7 @@ productController.get("/seed/dayactivities", async (req, res) => {
 });
 
 // Routes
-productController.post("/details", async (req, res) => {
+productController.get("/details", async (req, res) => {
   try {
     const query = parseInt(req.body.productID);
     const link = await prisma.Itinerary.findFirst({
