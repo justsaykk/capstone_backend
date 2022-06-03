@@ -2,7 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-app.use(express.json());
+const session = require("express-session");
+
 
 // Controllers
 const userController = require("./controllers/userController");
@@ -20,6 +21,19 @@ app.use(
       "http://capstone-frontend-nu.vercel.app",
     ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
+app.use(express.json());
+app.set("trust proxy", 1);
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
+    },
   })
 );
 

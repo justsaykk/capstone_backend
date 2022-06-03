@@ -7,9 +7,36 @@ const prisma = new PrismaClient();
 const userController = express.Router();
 const userSeeds = require("./seed_data/user_seed");
 
-// Generic Get Route (/api/user)
-userController.get("/", (req, res) => {
-  res.send({ msg: "Welcome to the user get route" });
+const isAuth = (req, res, next) => {
+  if (req.session.isLoggedIn) {
+    return next();
+  } else {
+    res.status(401).send({ error: "not authorized" });
+  }
+};
+
+// Login Route (/api/user)
+userController.post("/login", async (req, res) => {
+  try {
+    const foundUser = await prisma.user.findUnique({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (!foundUser) {
+      res.status(401).send({ msg: "email address not found" });
+      return;
+    }
+    if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+      req.session.currentUser = foundUser;
+      req.session.isLoggedIn = true;
+      res.status(200).send(foundUser);
+    } else {
+      res.status(401).send({ msg: "Wrong Password" });
+    }
+  } catch (error) {
+    res.status(200).send({ msg: error });
+  }
 });
 
 // Seeed Route
@@ -51,5 +78,21 @@ userController.post("/register", async (req, res) => {
     res.status(404).send({ msg: error });
   }
 });
+
+// Logout Route
+userController.delete("/logout", (req, res) => {
+  if (req.session) {
+    req.session.destroy((error) => {
+      if (error) {
+        res.status(400).send({ msg: "unable to logout" });
+      } else {
+        res.send({ msg: "logout successfully" });
+      }
+    });
+  } else {
+    res.end();
+  }
+});
+
 
 module.exports = userController;
