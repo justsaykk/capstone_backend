@@ -7,6 +7,14 @@ const itinerarySeed = require("./seed_data/itinerary_seed");
 const dayActivitiesSeed = require("./seed_data/dayactivities_seed");
 const productController = express.Router();
 
+const isAuth = (req, res, next) => {
+  if (req.session.isLoggedIn) {
+    return next();
+  } else {
+    res.status(401).send({ error: "not authorized" });
+  }
+};
+
 // Seed Routes
 productController.get("/seed/product", async (req, res) => {
   try {
@@ -90,12 +98,13 @@ productController.post("/addtocart", async (req, res) => {
   }
 });
 
-productController.post("/purchase", async (req, res) => {
+productController.post("/purchase", isAuth, async (req, res) => {
   try {
-    const { productId, email, trekDate } = req.body;
+    const { productId, trekDate } = req.body;
+    const currentUser = req.session.currentUser;
     await prisma.bookings.create({
       productId: productId,
-      email: email,
+      email: currentUser.email,
       trekDate: trekDate,
     });
     res.status(200).send({ msg: "Trip booked" });
