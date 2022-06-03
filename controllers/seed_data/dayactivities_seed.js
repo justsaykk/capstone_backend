@@ -1,6 +1,6 @@
 const dayActivitiesSeed = [
   /* ItineraryID 5 */ {
-    itineraryId: 5,
+    itineraryId: 4,
     Day01: "Arrival in Kathmandu",
     Day02: "Kathmandu sightseeing and Trip preperation.",
     Day03: "Trek from Phakding to Namche Bazaar.",
@@ -23,7 +23,7 @@ const dayActivitiesSeed = [
     Day20: null,
   },
   /* ItineraryID 6 */ {
-    itineraryId: 6,
+    itineraryId: 5,
     Day01: "Arrival in Kathmandu",
     Day02: "Kathmandu sightseeing and Trip preperation.",
     Day03: "Ride to Nayapul trek to Tikhedunga",
@@ -47,7 +47,7 @@ const dayActivitiesSeed = [
     Day20: null,
   },
   /* ItineraryID 7 */ {
-    itineraryId: 7,
+    itineraryId: 6,
     Day01: "Arrival in Kathmandu.",
     Day02: "Kathmandu sightseeing and Trip preperation.",
     Day03: "Fly from Kathmandy to Lukla. Trek to Phakding.",

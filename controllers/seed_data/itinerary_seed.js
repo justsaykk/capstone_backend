@@ -1,15 +1,15 @@
 // Seed Data
 const itinerarySeed = [
   {
-    productId: 1,
+    productId: 13,
     duration: 15,
   },
   {
-    productId: 2,
+    productId: 14,
     duration: 15,
   },
   {
-    productId: 3,
+    productId: 15,
     duration: 20,
   },
 ];
