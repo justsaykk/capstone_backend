@@ -84,6 +84,7 @@ productController.post("/addtocart", async (req, res) => {
         price: true,
       },
     });
+    res.status(200).send(queryResult);
   } catch (error) {
     res.status(400).send({ msg: error });
   }
