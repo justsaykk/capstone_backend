@@ -4,7 +4,6 @@ const cors = require("cors");
 const app = express();
 const session = require("express-session");
 
-
 // Controllers
 const userController = require("./controllers/userController");
 const productController = require("./controllers/productController");
@@ -40,7 +39,7 @@ app.use(
 // Routes
 app.use("/api/user", userController);
 app.use("/api/product", productController);
-app.use("api/bookings", bookingsController);
+app.use("/api/bookings", bookingsController);
 
 // Listener
 app.listen(process.env.PORT || 4000, () => {

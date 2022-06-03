@@ -12,11 +12,52 @@ const isAuth = (req, res, next) => {
   }
 };
 
-// Routes
-bookingsController.get("/", isAuth, async (req, res) => {
+// Routes (/api/bookings)
+
+// Reading bookings
+bookingsController.post("/", isAuth, async (req, res) => {
   const currentUser = req.session.currentUser;
   try {
-    // Code here
+    const bookings = await prisma.bookings.findMany({
+      where: {
+        email: currentUser.email,
+      },
+    });
+    res.status(200).send(bookings);
+  } catch (error) {
+    res.status(400).send({ msg: error });
+  }
+});
+
+// Update Route
+bookingsController.put("/update", isAuth, async (req, res) => {
+  const id = req.body.id;
+  const data = req.body.trekDate;
+  try {
+    await prisma.bookings.update({
+      where: {
+        id: id,
+      },
+      data: {
+        trekDate: data,
+      },
+    });
+    res.status(200).send({ msg: "updated successfully" });
+  } catch (error) {
+    res.status(400).send({ msg: error });
+  }
+});
+
+// Delete Route
+bookingsController.delete("/delete", isAuth, async (req, res) => {
+  const id = req.body.id;
+  try {
+    await prisma.bookings.delete({
+      where: {
+        id: id,
+      },
+    });
+    res.status(200).send({ msg: "Booking deleted" });
   } catch (error) {
     res.status(400).send({ msg: error });
   }
