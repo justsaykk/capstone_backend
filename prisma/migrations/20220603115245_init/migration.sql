@@ -55,6 +55,17 @@ CREATE TABLE "DayActivities" (
     CONSTRAINT "DayActivities_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "bookings" (
+    "id" SERIAL NOT NULL,
+    "productId" INTEGER NOT NULL,
+    "email" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "trekDate" TEXT NOT NULL,
+
+    CONSTRAINT "bookings_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -63,3 +74,9 @@ ALTER TABLE "Itinerary" ADD CONSTRAINT "Itinerary_productId_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "DayActivities" ADD CONSTRAINT "DayActivities_itineraryId_fkey" FOREIGN KEY ("itineraryId") REFERENCES "Itinerary"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "bookings" ADD CONSTRAINT "bookings_email_fkey" FOREIGN KEY ("email") REFERENCES "User"("email") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "bookings" ADD CONSTRAINT "bookings_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
