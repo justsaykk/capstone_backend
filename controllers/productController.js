@@ -7,16 +7,6 @@ const itinerarySeed = require("./seed_data/itinerary_seed");
 const dayActivitiesSeed = require("./seed_data/dayactivities_seed");
 const productController = express.Router();
 
-// Generic Get Route (/api/product)
-productController.get("/", async (req, res) => {
-  try {
-    const productList = await prisma.Products.findMany();
-    res.status(200).send(productList);
-  } catch (error) {
-    res.status(400).send({ msg: error });
-  }
-});
-
 // Seed Routes
 productController.get("/seed/product", async (req, res) => {
   try {
@@ -52,8 +42,18 @@ productController.get("/seed/dayactivities", async (req, res) => {
   }
 });
 
+// Generic Get Route (/api/product)
+productController.get("/", async (req, res) => {
+  try {
+    const productList = await prisma.Products.findMany();
+    res.status(200).send(productList);
+  } catch (error) {
+    res.status(400).send({ msg: error });
+  }
+});
+
 // Routes
-productController.get("/details", async (req, res) => {
+productController.post("/details", async (req, res) => {
   try {
     const query = parseInt(req.body.productID);
     const link = await prisma.Itinerary.findFirst({
