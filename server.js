@@ -7,6 +7,7 @@ app.use(express.json());
 // Controllers
 const userController = require("./controllers/userController");
 const productController = require("./controllers/productController");
+const bookingsController = require("./controllers/bookingsController");
 
 // CORS
 app.use(
@@ -25,6 +26,7 @@ app.use(
 // Routes
 app.use("/api/user", userController);
 app.use("/api/product", productController);
+app.use("api/bookings", bookingsController);
 
 // Listener
 app.listen(process.env.PORT || 4000, () => {
