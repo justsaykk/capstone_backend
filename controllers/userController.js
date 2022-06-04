@@ -39,7 +39,6 @@ userController.post("/login", async (req, res) => {
   }
 });
 
-
 // Register new user
 userController.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
@@ -49,7 +48,7 @@ userController.post("/register", async (req, res) => {
         email: email,
       },
     });
-    
+
     if (foundUser) {
       return res.status(400).send({ msg: "user exists" });
     } else {
@@ -82,17 +81,17 @@ userController.delete("/logout", isAuth, (req, res) => {
   }
 });
 
-// Seeed Route
-userController.get("/seed", async (req, res) => {
-  try {
-    await prisma.User.deleteMany({ where: {} });
-    await prisma.User.createMany({
-      data: userSeeds,
-    });
-    res.status(200).send({ msg: "users seeded" });
-  } catch (error) {
-    res.status(404).send({ msg: error });
-  }
-});
+// // Seeed Route
+// userController.get("/seed", async (req, res) => {
+//   try {
+//     await prisma.User.deleteMany({ where: {} });
+//     await prisma.User.createMany({
+//       data: userSeeds,
+//     });
+//     res.status(200).send({ msg: "users seeded" });
+//   } catch (error) {
+//     res.status(404).send({ msg: error });
+//   }
+// });
 
 module.exports = userController;
