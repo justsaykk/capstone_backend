@@ -39,18 +39,6 @@ userController.post("/login", async (req, res) => {
   }
 });
 
-// Seeed Route
-userController.get("/seed", async (req, res) => {
-  try {
-    await prisma.User.deleteMany({ where: {} });
-    await prisma.User.createMany({
-      data: userSeeds,
-    });
-    res.status(200).send({ msg: "users seeded" });
-  } catch (error) {
-    res.status(404).send({ msg: error });
-  }
-});
 
 // Register new user
 userController.post("/register", async (req, res) => {
@@ -61,7 +49,7 @@ userController.post("/register", async (req, res) => {
         email: email,
       },
     });
-
+    
     if (foundUser) {
       return res.status(400).send({ msg: "user exists" });
     } else {
@@ -80,7 +68,7 @@ userController.post("/register", async (req, res) => {
 });
 
 // Logout Route
-userController.delete("/logout", (req, res) => {
+userController.delete("/logout", isAuth, (req, res) => {
   if (req.session) {
     req.session.destroy((error) => {
       if (error) {
@@ -94,5 +82,17 @@ userController.delete("/logout", (req, res) => {
   }
 });
 
+// Seeed Route
+userController.get("/seed", async (req, res) => {
+  try {
+    await prisma.User.deleteMany({ where: {} });
+    await prisma.User.createMany({
+      data: userSeeds,
+    });
+    res.status(200).send({ msg: "users seeded" });
+  } catch (error) {
+    res.status(404).send({ msg: error });
+  }
+});
 
 module.exports = userController;

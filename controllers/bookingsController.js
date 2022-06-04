@@ -15,12 +15,19 @@ const isAuth = (req, res, next) => {
 // Routes (/api/bookings)
 
 // Reading bookings
-bookingsController.post("/", isAuth, async (req, res) => {
+bookingsController.get("/", isAuth, async (req, res) => {
   const currentUser = req.session.currentUser;
   try {
     const bookings = await prisma.bookings.findMany({
       where: {
         email: currentUser.email,
+      },
+      include: {
+        product: {
+          select: {
+            pName: true,
+          },
+        },
       },
     });
     res.status(200).send(bookings);
