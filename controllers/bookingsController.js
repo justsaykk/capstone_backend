@@ -38,7 +38,7 @@ bookingsController.get("/", isAuth, async (req, res) => {
 
 // Update Route
 bookingsController.put("/update", isAuth, async (req, res) => {
-  const id = req.body.id;
+  const id = parseInt(req.body.id);
   const data = req.body.trekDate;
   try {
     await prisma.bookings.update({
@@ -57,7 +57,8 @@ bookingsController.put("/update", isAuth, async (req, res) => {
 
 // Delete Route
 bookingsController.delete("/delete", isAuth, async (req, res) => {
-  const id = req.body.id;
+  const id = parseInt(req.body.id);
+
   try {
     await prisma.bookings.delete({
       where: {
