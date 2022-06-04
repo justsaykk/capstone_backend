@@ -54,7 +54,7 @@ productController.get("/seed/dayactivities", async (req, res) => {
 productController.get("/", async (req, res) => {
   try {
     const productList = await prisma.Products.findMany();
-    res.status(200).send(productList);
+    res.status(200).send({ productList });
   } catch (error) {
     res.status(400).send({ msg: error });
   }
